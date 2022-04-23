@@ -4,7 +4,7 @@ public class Case {
     private int nivMarin;
     private int coordX, coordY;
 
-    public Case(boolean heliport, int artéfact, int nivMarin, int coordX, int coordY) {
+    public Case(boolean heliport, int artéfact, int coordX, int coordY) {
         this.heliport = isHeliport();
         Artéfact = artéfact;
         this.nivMarin = nivMarin;

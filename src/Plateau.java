@@ -30,7 +30,7 @@ public class Plateau {
         listCase = new Case[x][y];
         for (int i = 0; i < x; i++){
             for (int j = 0; j < y; j++)
-                listCase [i][j] = new Case(false, 0, 2, i, j);
+                listCase [i][j] = new Case(false, 2, i, j);
         }
         return;
     }
@@ -52,11 +52,11 @@ public class Plateau {
             }
             while (contient(x, y, position));
             if (compteur == 0){
-                listCase[x][y] = new Case (true, 0, 2, x, y);
+                listCase[x][y] = new Case (true, 0,  x, y);
                 Aeroport = listCase[x][y];
             }
             else
-                listCase[x][y] = new Case(false, compteur, 2, x, y);
+                listCase[x][y] = new Case(false, compteur,  x, y);
             position[compteur * 2] = x;
             position[compteur * 2 + 1] = y;
 
@@ -85,7 +85,7 @@ public class Plateau {
 
     public Case getCase(int x, int y){
         if (x < 0 || x >= longueur || y < 0 || y >= largeur)
-            return new Case(false, 0, 2, -1, -1);
+            return new Case(false, 0, -1, -1);
         return listCase[x][y];
     }
 
@@ -103,7 +103,8 @@ public class Plateau {
         return listCase;
     }
 
-    public Case[] getSpecialCase() {
-        return specialCase;
+    public Case getSpecialCase(int position) {
+        if (position < 0 || position > 4) return new Case(false, 0, -1, -1);
+        return specialCase[position];
     }
 }

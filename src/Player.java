@@ -44,8 +44,8 @@ public class Player {
         return nom;
     }
 
-    public int[] getKeys() {
-        return keys;
+    public int getKeys( int k) {
+        return keys[k];
     }
 
     public boolean[] getArtéfact() {
@@ -59,4 +59,20 @@ public class Player {
     public int getRôle() {
         return rôle;
     }
+
+    public int getPosx() { return Player.getCoordX();}
+
+    public int getPosy() { return Player.getCoordY();}
+
+public boolean verifKey(int key){
+    if(key > 3 || key < 0) return false;
+    return keys[key] > 0 ? true : false;
+}
+
+    public boolean verifArtefact(int artéfact){
+        if(artéfact > 3 || artéfact < 0) return false;
+        return this.artéfact[artéfact];
+}
+
+
 }

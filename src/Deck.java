@@ -49,7 +49,14 @@ public class Deck {
     }
 
     public void melangeDeckDefausse(){
-        ArrayList<Integer> temp = new
+        ArrayList<Integer> temp = new ArrayList<>(deckDefausse.size());
+        int draw;
+        while (!deckDefausse.isEmpty()){
+            draw = hazard.nextInt(deckDefausse.size());
+            temp.add(deckDefausse.get(draw));
+            deckDefausse.remove(draw);
+        }
+        deck.addAll(temp);
     }
 
 
