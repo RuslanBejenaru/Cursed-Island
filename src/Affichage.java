@@ -44,7 +44,6 @@ public Affichage(Plateau plateau, Player[] p){
     pawns = new Objet[p.length];
 
     afficheAide = true;
-return;
 }
 
 
@@ -57,12 +56,11 @@ public void intialize(){
     for (int i = 0; i < pawns.length; i++)
         pawns[i] = new Objet(players[i].getPosx(), players[i].getPosy(), CJOUEUR[i]);
 
-    createWindow("POGL mes couilles");
+    createWindow();
     update();
     nameBoxes(false);
 
-    return;
-    }
+}
 
     public void nameBoxes(boolean posBox){
     if(posBox){
@@ -72,18 +70,16 @@ public void intialize(){
         }
         } else {
             if (boxs[0][0].texte.equals("0")){
-                for (int i = 0; i < boxs.length; i++){
-                    for (int j = 0; j < boxs[i].length; j++)
-                        boxs[i][j].texte = "";
+                for (Objet[] box : boxs) {
+                    for (Objet objet : box) objet.texte = "";
                 }
             }
 
             boxs[plateau.getSpecialCase(0).getCoordX()][plateau.getSpecialCase(0).getCoordY()].texte = "Héliport";
-        boxs[plateau.getSpecialCase(1).getCoordX()][plateau.getSpecialCase(1).getCoordY()].texte = "Air";
-
-        boxs[plateau.getSpecialCase(2).getCoordX()][plateau.getSpecialCase(2).getCoordY()].texte = "Eau";
-        boxs[plateau.getSpecialCase(3).getCoordX()][plateau.getSpecialCase(3).getCoordY()].texte = "Terre";
-        boxs[plateau.getSpecialCase(4).getCoordX()][plateau.getSpecialCase(4).getCoordY()].texte = "Feu";
+            boxs[plateau.getSpecialCase(1).getCoordX()][plateau.getSpecialCase(1).getCoordY()].texte = "Air";
+            boxs[plateau.getSpecialCase(2).getCoordX()][plateau.getSpecialCase(2).getCoordY()].texte = "Eau";
+            boxs[plateau.getSpecialCase(3).getCoordX()][plateau.getSpecialCase(3).getCoordY()].texte = "Terre";
+            boxs[plateau.getSpecialCase(4).getCoordX()][plateau.getSpecialCase(4).getCoordY()].texte = "Feu";
 
 
     }
@@ -91,14 +87,27 @@ public void intialize(){
     }
 
 
-private void createWindow (String name){
-    JFrame window = new JFrame(name);
+private void createWindow(){
+    JFrame window = new JFrame("Cursed-Island");
+
+    JButton boutonDroite = new JButton(">");
+    this.add(boutonDroite);
+
+    JButton boutonGauche = new JButton("<");
+    this.add(boutonGauche);
+
+    JButton boutonHaut = new JButton("^");
+    this.add(boutonHaut);
+
+    JButton boutonBas = new JButton("↧");
+    this.add(boutonBas);
 
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     window.getContentPane().add(this);
 
-    window.setPreferredSize(new Dimension(600, 600));
+    window.setPreferredSize(new Dimension(600, 1200));
+
 
     window.pack();
 
@@ -179,7 +188,7 @@ private void createWindow (String name){
         return;
     }
     private void drawBoxs(Graphics g, int sizeBox, int marginUpDown, int marginLeftRight){
-    Font fontBox = new Font("Arial", Font.BOLD, sizeBox/6);
+    Font fontBox = new Font("Arial", Font.BOLD, sizeBox/5);
 
     int sizeText;
 
@@ -349,7 +358,7 @@ private void createWindow (String name){
         g.drawRect(getWidth()/2-25+50, getHeight()/2-50, 50, 50);
 
         // On met un titre.
-        g.drawString("Projet POGL : Île Interdite",   getWidth()/2-65, getHeight()/2-120);
+        g.drawString("Projet POGL",   getWidth()/2-65, getHeight()/2-120);
 
         // On met les légendes des cases dans ses cases.
         g.drawString("Air",   getWidth()/2-25-75+18, getHeight()/2-75);
@@ -375,12 +384,12 @@ private void createWindow (String name){
             aEcrire = ": " + players[i].getNom();
 
             // On cherche le role du joueur.
-            if(players[i].getRôle() == 1) aEcrire += " - le Pilote";
-            else if(players[i].getRôle() == 2) aEcrire += " - l'Ingénieur";
-            else if(players[i].getRôle() == 3) aEcrire += " - l'Explorateur";
-            else if(players[i].getRôle() == 4) aEcrire += " - le Navigateur";
-            else if(players[i].getRôle() == 5) aEcrire += " - le Plongeur";
-            else if(players[i].getRôle() == 6) aEcrire += " - le Messager";
+            if(players[i].getRole() == 1) aEcrire += " - le Pilote";
+            else if(players[i].getRole() == 2) aEcrire += " - l'Ingénieur";
+            else if(players[i].getRole() == 3) aEcrire += " - l'Explorateur";
+            else if(players[i].getRole() == 4) aEcrire += " - le Navigateur";
+            else if(players[i].getRole() == 5) aEcrire += " - le Plongeur";
+            else if(players[i].getRole() == 6) aEcrire += " - le Messager";
 
             g.drawString(aEcrire, getWidth()/2-25, getHeight()/2 + (i*30) + 25);
         }
@@ -423,26 +432,20 @@ private void createWindow (String name){
         // On crée le texte à afficher, la police et on calcul la taille du texte.
         String aEcrire = "C'est au tour de : " + currentPlayer.getNom();
 
-        if(currentPlayer.getRôle() == 1) aEcrire += " - le Pilote";
-        else if(currentPlayer.getRôle() == 2) aEcrire += " - l'Ingénieur";
-        else if(currentPlayer.getRôle() == 3) aEcrire += " - l'Explorateur";
-        else if(currentPlayer.getRôle() == 4) aEcrire += " - le Navigateur";
-        else if(currentPlayer.getRôle() == 5) aEcrire += " - le Plongeur";
-        else if(currentPlayer.getRôle() == 6) aEcrire += " - le Messager";
+        if(currentPlayer.getRole() == 1) aEcrire += " - le Pilote ";
+        else if(currentPlayer.getRole() == 2) aEcrire += " - l'Ingénieur";
+        else if(currentPlayer.getRole() == 3) aEcrire += " - l'Explorateur";
+        else if(currentPlayer.getRole() == 4) aEcrire += " - le Navigateur";
+        else if(currentPlayer.getRole() == 5) aEcrire += " - le Plongeur";
+        else if(currentPlayer.getRole() == 6) aEcrire += " - le Messager";
 
-        Font fontCase = new Font("Arial", Font.BOLD, tailleCase/5);
+        Font fontCase = new Font("Arial", Font.BOLD, tailleCase/4);
         int tailleTexte = g.getFontMetrics().stringWidth(aEcrire);
 
         // On dessine le texte.
         g.setColor(Color.black);
         g.setFont(fontCase);
-        g.drawString(aEcrire, this.getWidth() / 2 - tailleTexte / 2, tailleCase / 3);
-
-        // On dessine le pion du joueur à coté de son nom (this.getWidth() / 100 pour séparer le pion du texte).
-        g.setColor(pawns[posJoueur].couleur);
-        g.fillOval(this.getWidth() / 2 + tailleTexte / 2 + this.getWidth() / 100, tailleCase / 9, tailleCase / 3, tailleCase / 3);
-        g.setColor(Color.black);
-        g.drawOval(this.getWidth() / 2 + tailleTexte / 2 + this.getWidth() / 100, tailleCase / 9, tailleCase / 3, tailleCase / 3);
+        g.drawString(aEcrire, this.getWidth() / 2 - tailleTexte, tailleCase);
 
 
         // On change le texte à écrire et on recalcul sa taille.

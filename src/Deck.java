@@ -1,25 +1,27 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+// ------------------------
+// Classe Deck qui représente un paquet de carte, carte représenté par des valeurs.
+// ------------------------
+
+
 public class Deck {
     protected ArrayList<Integer> deck;
     protected ArrayList<Integer> deckDefausse;
     private Random hazard = new Random();
 
-    public Deck(int taille){
-        deck = new ArrayList<>();
-        deckDefausse = new ArrayList<>();
+    /*
+     * Constructeur
+     * @param size : la taille du paquet.
+     */
 
-        for (int i = 0; i < taille; i++)
-            deck.add(i);
+    public void mixDeck(){
 
-        melangeDeck();
-    }
-
-
-    public void melangeDeck(){
+        // On cree un deck temporaire
         ArrayList<Integer> temp = new ArrayList<>(deck.size());
 
+        // On sauvegarde
         int draw;
 
         while (!deck.isEmpty()){
@@ -31,6 +33,21 @@ public class Deck {
         }
         deck.addAll(temp);
     }
+
+
+    public Deck(int size){
+        deck = new ArrayList<>();
+        deckDefausse = new ArrayList<>();
+
+        // On met size nombres
+        for (int i = 0; i < size; i++)
+            deck.add(i);
+
+        // On melange le deck
+        mixDeck();
+    }
+
+
 
     public int firstCard(){
         if(deck.isEmpty()) melangeDeckDefausse();

@@ -1,5 +1,3 @@
-import java.security.Key;
-
 public class Player {
     private String nom;
     private int [] keys;
@@ -56,7 +54,7 @@ public class Player {
         return Player;
     }
 
-    public int getRôle() {
+    public int getRole() {
         return rôle;
     }
 

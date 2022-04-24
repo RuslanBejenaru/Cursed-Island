@@ -1,13 +1,12 @@
 public class Case {
     private boolean heliport;
-    private int Artéfact;
-    private int nivMarin;
+    private int Artefact;
+    private int nivMarin = 2;
     private int coordX, coordY;
 
-    public Case(boolean heliport, int artéfact, int coordX, int coordY) {
-        this.heliport = isHeliport();
-        Artéfact = artéfact;
-        this.nivMarin = nivMarin;
+    public Case(boolean isHeliport, int Artefact, int coordX, int coordY) {
+        this.heliport = isHeliport;
+        this.Artefact = Artefact;
         this.coordX = coordX;
         this.coordY = coordY;
     }
@@ -27,8 +26,7 @@ public class Case {
     }
 
     public void ramasserArtéfact(){
-        Artéfact = 0;
-        return;
+        Artefact = 0;
     }
 
 
@@ -38,7 +36,7 @@ public class Case {
     }
 
     public int getArtéfact() {
-        return Artéfact;
+        return Artefact;
     }
 
     public int getNivMarin() {

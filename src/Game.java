@@ -93,19 +93,6 @@ public class Game {
             // On update pour afficher les actions.
             affichage.update();
 
-			/*
-			// On affiche les infos du joueur.
-			System.out.println("--------\nAu tour de " + j.getName());
-			System.out.println("Vos clefs : " + Integer.toString(j.getClef(0)) + "x Air - "
-					+ Integer.toString(j.getClef(1)) + "x Eau - "
-					+ Integer.toString(j.getClef(2)) + "x Terre - "
-					+ Integer.toString(j.getClef(3)) + "x Feu");
-
-			System.out.println("Vos artefacts : " + (j.verifArtefact(0) ? "Air ":"___ ")
-					+ (j.verifArtefact(1) ? "Eau ":"___ ")
-					+ (j.verifArtefact(2) ? "Terre ":"_____ ")
-					+ (j.verifArtefact(3) ? "Feu ":"___ "));
-			*/
 
             // 3 actions.
             for(int i = 0; i < 3; i++) {
@@ -118,8 +105,8 @@ public class Game {
                             (j.getPlayer().getArtéfact() != 0 ? " - Recherche artefact (R) :" : ""));
 
                     // Si le joueur à une capacité spéciales qui ajoute une action possible.
-                    if(j.getRôle() == 1) System.out.print("\nPilote : Hélico (T)");
-                    if(j.getRôle() == 4) System.out.print("\nNavigateur : Déplacer un autre joueur (J)");
+                    if(j.getRole() == 1) System.out.print("\nPilote : Hélico (T)");
+                    if(j.getRole() == 4) System.out.print("\nNavigateur : Déplacer un autre joueur (J)");
 
                     System.out.print("\n\nVotre choix : ");
                     str = sc.nextLine();
@@ -139,7 +126,7 @@ public class Game {
                 }while(passe != 0 && passe != 2);
 
                 // Si on est un ingénieur, on peux assecher deux cases donc la première fois, on ne bouge pas le nombre d'action restante.
-                if((str.equals("A") || str.equals("a")) && j.getRôle() == 2 && !assecheInge) {
+                if((str.equals("A") || str.equals("a")) && j.getRole() == 2 && !assecheInge) {
                     i--;
                     assecheInge = true;
                 }
@@ -195,7 +182,7 @@ public class Game {
         if (action.equals("D") || action.equals("d")) {
 
             // On demande où aller (si explorateur, deplacement diagonal).
-            if(j.getRôle() != 3)
+            if(j.getRole() != 3)
                 System.out.print("\n   (H)\n(G)-|-(D)\n   (B)\nVotre choix : ");
             else
                 System.out.print("\n(HG)(H)(HD)\n(G) -|- (D)\n(BG)(B)(BD)\nVotre choix : ");
@@ -215,7 +202,7 @@ public class Game {
         else if (action.equals("A") || action.equals("a")) {
 
             // On demande où assecher (si explorateur, assechement diagonal).
-            if(j.getRôle() != 3)
+            if(j.getRole() != 3)
                 System.out.print("\n   (H)\n(G)(C)(D)\n   (B)\nVotre choix : ");
             else
                 System.out.print("\n(HG)(H)(HD)\n(G) (C) (D)\n(BG)(B)(BD)\nVotre choix : ");
@@ -270,7 +257,7 @@ public class Game {
             System.out.println("\nA quel joueur ?");
             for(int k = 0; k < players.length; k++) {
                 // Si le joueur est un messager, il peux donner une clef a tout le monde.
-                if(j.getRôle() == 6)
+                if(j.getRole() == 6)
                     System.out.println(players[k].getNom() + " - " + CJOUEUR[k] + " (" + Integer.toString(k) + ")");
                 else {
                     // On ne met que les joueurs qui sont sur la même case.
@@ -295,7 +282,7 @@ public class Game {
         }
 
         // Si le joueur est un pilote et qu'il veut se déplacer.
-        else if((action.equals("T") || action.equals("t")) && j.getRôle() == 1){
+        else if((action.equals("T") || action.equals("t")) && j.getRole() == 1){
             // On téléporte le joueur (ne renvoie pas d'erreurs).
             teleporte(j, true);
             System.out.println("Déplacement effectué.\n");
@@ -303,7 +290,7 @@ public class Game {
         }
 
         // Si le joueur est un navigateur
-        else if((action.equals("J") || action.equals("j")) && j.getRôle() == 4){
+        else if((action.equals("J") || action.equals("j")) && j.getRole() == 4){
 
             // On demande quel joueur déplacer.
             System.out.println("\nDéplacer quel joueur ?");
@@ -370,7 +357,7 @@ public class Game {
             if(j.getPosy() == 0) return 1;
 
             // Si la case du dessus est submergé (sauf si c'est un Nageur).
-            if(plateau.getCase(j.getPosx(), j.getPosy()-1).getNivMarin() == 0 && !DEBUG && j.getRôle() != 5) return 1;
+            if(plateau.getCase(j.getPosx(), j.getPosy()-1).getNivMarin() == 0 && !DEBUG && j.getRole() != 5) return 1;
 
             // Sinon, on donne la case du dessus au joueur.
             j.casePlayer(plateau.getCase(j.getPosx(), j.getPosy()-1));
@@ -379,25 +366,25 @@ public class Game {
         // Si on demande un déplacement bas.
         else if(HBGD.equals("B") || HBGD.equals("b")){
             if(j.getPosy() + 1 == plateau.getLargeur()) return 1;
-            if(plateau.getCase(j.getPosx(), j.getPosy()+1).getNivMarin() == 0 && !DEBUG && j.getRôle() != 5) return 1;
+            if(plateau.getCase(j.getPosx(), j.getPosy()+1).getNivMarin() == 0 && !DEBUG && j.getRole() != 5) return 1;
             j.casePlayer(plateau.getCase(j.getPosx(), j.getPosy()+1));
         }
 
         // Si on demande un déplacement gauche.
         else if(HBGD.equals("G") || HBGD.equals("g")){
             if(j.getPosx() == 0) return 1;
-            if(plateau.getCase(j.getPosx()-1, j.getPosy()).getNivMarin() == 0 && !DEBUG && j.getRôle() != 5) return 1;
+            if(plateau.getCase(j.getPosx()-1, j.getPosy()).getNivMarin() == 0 && !DEBUG && j.getRole() != 5) return 1;
             j.casePlayer(plateau.getCase(j.getPosx()-1, j.getPosy()));
         }
 
         // Si on demande un déplacement droit.
         else if(HBGD.equals("D") || HBGD.equals("d")){
             if(j.getPosx() + 1 == plateau.getLongueur()) return 1;
-            if(plateau.getCase(j.getPosx()+1, j.getPosy()).getNivMarin() == 0 && !DEBUG && j.getRôle() != 5) return 1;
+            if(plateau.getCase(j.getPosx()+1, j.getPosy()).getNivMarin() == 0 && !DEBUG && j.getRole() != 5) return 1;
             j.casePlayer(plateau.getCase(j.getPosx()+1, j.getPosy()));
         }
 
-        else if(j.getRôle() == 3){
+        else if(j.getRole() == 3){
             if(HBGD.equals("HD") || HBGD.equals("hd")){
                 if(j.getPosx() + 1 == plateau.getLongueur() || j.getPosy() == 0) return 1;
                 if(plateau.getCase(j.getPosx()+1, j.getPosy()-1).getNivMarin() == 0 && !DEBUG) return 1;
@@ -483,7 +470,7 @@ public class Game {
         }
 
         // Si le joueur est un explorateur, on ajoute des déplacements.
-        else if(j.getRôle() == 3){
+        else if(j.getRole() == 3){
             if(HBGD.equals("HD") || HBGD.equals("hd")){
                 if(j.getPosx() + 1 == plateau.getLongueur() || j.getPosy() == 0) return 1;
                 if(plateau.getCase(j.getPosx()+1, j.getPosy()-1).getNivMarin() == 0) return 1;
@@ -812,7 +799,7 @@ public class Game {
 
         // Si le joueur n'est pas un messager et qu'il n'est pas sur la même case que l'autre joueur,
         // erreur.
-        if(j.getRôle() != 6 && !players[aDonner].getPlayer().equals(j.getPlayer())) return 1;
+        if(j.getRole() != 6 && !players[aDonner].getPlayer().equals(j.getPlayer())) return 1;
 
         // Sinon, on verifie que le joueur a bien la clef et on lui donne.
         if(str.equals("A") || str.equals("a")){
