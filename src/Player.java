@@ -16,18 +16,18 @@ public class Player {
         return;
     }
 
-    public boolean ajouteKeys(int key){
+    public int ajouteKeys(int key){
         if (key > 3 || key < 0)
-            return false;
+            return 1;
         this.keys[key]++;
-        return true;
+        return 0;
     }
 
-    public boolean supprimeKeys(int key){
+    public int supprimeKeys(int key){
         if (key > 3 || key < 0 || (keys[key] == 0))
-            return false;
+            return 1;
         this.keys[key]--;
-        return true;
+        return 0;
     }
     public int ajouteArtéfact(int artéfact){
         if (artéfact > 3 || artéfact < 0)

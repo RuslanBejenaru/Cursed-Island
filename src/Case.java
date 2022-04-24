@@ -12,18 +12,18 @@ public class Case {
         this.coordY = coordY;
     }
 
-    public boolean inondation(){
+    public int inondation(){
         if(nivMarin >= 2)
-            return true;
+            return 1;
         nivMarin++;
-        return false;
+        return 0;
     }
 
-    public boolean assèchement(){
+    public int assèchement(){
         if (nivMarin <= 0)
-            return true;
+            return 1;
         nivMarin--;
-        return false;
+        return 0;
     }
 
     public void ramasserArtéfact(){
