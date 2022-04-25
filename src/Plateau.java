@@ -1,10 +1,3 @@
-// ------------------------
-// Classe Plateau : Représente un tableau 2D de Case et s'occupe
-// de l'initialiser.
-// ------------------------
-
-
-
 import java.util.Random;
 
 
