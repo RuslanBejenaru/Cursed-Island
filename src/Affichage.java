@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Affichage extends JPanel {
 
-    private class Objet{
+    private static class Objet{
         protected int x, y;
         protected String texte;
         protected Color couleur;
@@ -171,21 +172,18 @@ private void createWindow(){
     private void drawBoard(Graphics g, int a, int b, int c, int d) {
         for (int i = 0; i < plateau.getLongueur() + 1; i++) {
             int atemp = a + ((c - a) / (plateau.getLongueur())) * i;
-            int btemp = b;
             int ctemp = a + ((c - a) / (plateau.getLargeur())) * i;
 
             int dtemp = b + ((d - b) / (plateau.getLargeur())) * (plateau.getLargeur());
-            g.drawLine(atemp, btemp, ctemp, dtemp);
+            g.drawLine(atemp, b, ctemp, dtemp);
         }
         for (int i = 0; i < plateau.getLargeur() + 1; i++) {
-            int atemp = a;
             int btemp = b + ((d - b) / (plateau.getLargeur())) * i;
             int ctemp = a + ((c - a) / (plateau.getLongueur())) * (plateau.getLongueur());
 
             int dtemp = b + ((d - b) / (plateau.getLargeur())) * i;
-            g.drawLine(atemp, btemp, ctemp, dtemp);
+            g.drawLine(a, btemp, ctemp, dtemp);
         }
-        return;
     }
     private void drawBoxs(Graphics g, int sizeBox, int marginUpDown, int marginLeftRight){
     Font fontBox = new Font("Arial", Font.BOLD, sizeBox/5);
@@ -199,7 +197,7 @@ private void createWindow(){
                 g.fillRect(f.x * sizeBox + marginLeftRight + 1, f.y * sizeBox + marginUpDown + 1, sizeBox - 1, sizeBox - 1);
 
                 // Si la case doit avoir un texte.
-                if(f.texte != "") {
+                if(!Objects.equals(f.texte, "")) {
 
                     // On met le texte en noir.
                     g.setColor(Color.black);
@@ -215,7 +213,6 @@ private void createWindow(){
                 }
             }
         }
-        return;
     }
 
     /*
@@ -242,7 +239,7 @@ private void createWindow(){
             // On crée une liste dans la liste.
             caseJ.add(new ArrayList<Objet>());
 
-            // A la fin de cette liste, on met le premier pion de pionsdis, qui sera étudié puis supprimé.
+            // A la fin de cette liste, on met le premier pion de pions dis, qui sera étudié puis supprimé.
             caseJ.get(caseJ.size()-1).add(pawns[pionsDis.get(0)]);
 
             // i=1 pour eviter de réetudier le premier pion.
@@ -341,7 +338,7 @@ private void createWindow(){
         g.fillRect(getWidth()/2-25-50, getHeight()/2-50, 50, 50);
 
         g.setColor(CNORMAL[1]);
-        g.fillRect(getWidth()/2-25+00, getHeight()/2-50, 50, 50);
+        g.fillRect(getWidth() / 2 - 25, getHeight()/2-50, 50, 50);
 
         g.setColor(CNORMAL[2]);
         g.fillRect(getWidth()/2-25+50, getHeight()/2-50, 50, 50);
@@ -354,7 +351,7 @@ private void createWindow(){
         g.drawRect(getWidth()/2-25+75, getHeight()/2-100, 50, 50);
 
         g.drawRect(getWidth()/2-25-50, getHeight()/2-50, 50, 50);
-        g.drawRect(getWidth()/2-25-0, getHeight()/2-50, 50, 50);
+        g.drawRect(getWidth() / 2 - 25, getHeight()/2-50, 50, 50);
         g.drawRect(getWidth()/2-25+50, getHeight()/2-50, 50, 50);
 
         // On met un titre.
@@ -367,7 +364,7 @@ private void createWindow(){
         g.drawString("Feu",   getWidth()/2-25+75+15, getHeight()/2-75);
 
         g.drawString("Normale",   getWidth()/2-25-50+1, getHeight()/2-25);
-        g.drawString("Inondé",   getWidth()/2-25-00+6, getHeight()/2-25);
+        g.drawString("Inondé",   getWidth() / 2 - 25 +6, getHeight()/2-25);
         g.setColor(Color.white);
         g.drawString("Sub", getWidth()/2-25+50+15, getHeight()/2-25);
 
@@ -620,8 +617,7 @@ private void createWindow(){
      */
     public void afficherAide(){
         // Interrupteur.
-        afficheAide = afficheAide ? false : true;
-        return;
+        afficheAide = !afficheAide;
     }
 }
 

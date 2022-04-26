@@ -86,8 +86,7 @@ public class Main {
     }
 
     public static void main(String[] args){
-        Game j = new Game(9, 6, entrerJoueur());
+        Game j = new Game(6, 6, entrerJoueur());
         j.start();
-        return;
     }
 }
